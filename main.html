@@ -1,52 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Click and Drag</title>
-    <style>
-        .cube {
-            width: 50px;
-            height: 50px;
-            background-color: #ccc;
-            margin: 10px;
-            display: inline-block;
-        }
-    </style>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+   <style>
+      #div1 {
+  background-image: url("https://picsum.photos/id/237/200/300");
+  height: 300px;
+  width: 200px;
+  margin: 20px;
+}
+
+#div2 {
+  background-image: url("https://picsum.photos/seed/picsum/200/300");
+  height: 300px;
+  width: 200px;
+  margin: 20px;
+}
+
+#div3 {
+  background-image: url("https://picsum.photos/200/300");
+  height: 300px;
+  width: 200px;
+  margin: 20px;
+}
+
+#div4 {
+  background-image: url("https://picsum.photos/200/300/");
+  height: 300px;
+  width: 200px;
+  margin: 20px;
+}
+
+#div5 {
+  background-image: url("https://picsum.photos/200/300.jpg");
+  height: 300px;
+  width: 200px;
+  margin: 20px;
+}
+
+#div6 {
+  background-image: url("https://picsum.photos/id/102/200/300");
+  height: 300px;
+  width: 200px;
+  margin: 20px;
+}
+
+div.container {
+  border: 5px solid #555;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.selected {
+  border: 5px solid rgb(0, 195, 255);
+}
+
+p {
+  text-align: center;
+}
+
+button {
+  margin: 20px;
+}
+
+   </style>
 </head>
 <body>
-    <div class="cube" id="cube-1"></div>
-    <div class="cube" id="cube-2"></div>
-    <div class="cube" id="cube-3"></div>
-    <div class="cube" id="cube-4"></div>
-    <div class="cube" id="cube-5"></div>
+   <div id="div1" class="image-box" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <img id="drag1" src="https://picsum.photos/id/237/200/300" draggable="true" ondragstart="drag(event)">
+   </div>
 
-    <script>
-        let cubes = document.querySelectorAll('.cube');
-        let draggedCube = null;
-        let mouseDownX = 0;
-        let mouseDownY = 0;
+   <div id="div2" class="image-box" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <img id="drag2" src="https://picsum.photos/seed/picsum/200/300" draggable="true" ondragstart="drag(event)">
+   </div>
 
-        cubes.forEach(cube => {
-            cube.addEventListener('mousedown', (e) => {
-                draggedCube = cube;
-                mouseDownX = e.clientX;
-                mouseDownY = e.clientY;
-            });
-        });
+   <div id="div3" class="image-box" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <img id="drag3" src="https://picsum.photos/200/300" draggable="true" ondragstart="drag(event)">
+   </div>
 
-        document.addEventListener('mousemove', (e) => {
-            if (draggedCube) {
-                let newX = draggedCube.offsetLeft + (e.clientX - mouseDownX);
-                let newY = draggedCube.offsetTop + (e.clientY - mouseDownY);
-                draggedCube.style.top = newY + 'px';
-                draggedCube.style.left = newX + 'px';
-            }
-        });
+   <div id="div4" class="image-box" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <img id="drag4" src="https://picsum.photos/200/300/" draggable="true" ondragstart="drag(event)">
+   </div>
 
-        document.addEventListener('mouseup', () => {
-            draggedCube = null;
-        });
-    </script>
+   <div id="div5" class="image-box" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <img id="drag5" src="https://picsum.photos/200/300.jpg" draggable="true" ondragstart="drag(event)">
+   </div>
+
+   <div id="div6" class="image-box" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <img id="drag6" src="https://picsum.photos/id/102/200/300" draggable="true" ondragstart="drag(event)">
+   </div>
+
+   <script>
+      let draggedImage = null;
+      function allowDrop(event){
+         event.preventDefault();
+      }
+
+      function drag(event){
+         draggedImage = event.target;
+      }
+
+      function drop(event){
+         event.preventDefault();
+         const targetContainer = event.currentTarget;
+         if(targetContainer !== draggedImage.parentElement){
+            const targetImage = targetContainer.querySelector('img');
+            const tempSrc = targetImage.src;
+            targetImage.src = draggedImage.src;
+            draggedImage.src = tempSrc;
+         }
+
+      }
+
+   </script>
 </body>
 </html>
